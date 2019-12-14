@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'bottom.dart';
 import 'signup.dart';
 
@@ -7,11 +8,18 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.white, // navigation bar color
+      statusBarColor: Colors.white, // status bar color
+      statusBarIconBrightness: Brightness.dark, // status bar icons' color
+      systemNavigationBarIconBrightness:
+          Brightness.dark, //navigation bar icons' color
+    ));
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/signup': (BuildContext context) => new SignupPage(),
-        '/bottom' : (BuildContext context) => new BottomPage()
+        '/bottom': (BuildContext context) => new BottomPage()
       },
       home: new MyHomePage(),
     );
@@ -27,6 +35,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        backgroundColor: Colors.white,
         resizeToAvoidBottomPadding: false,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,16 +59,16 @@ class MyHomePageState extends State<MyHomePage> {
                           fontSize: 50.0, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(145.0, 100.0, 0.0, 0.0),
-                    child: Text(
-                      '.',
-                      style: TextStyle(
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green),
-                    ),
-                  )
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(145.0, 100.0, 0.0, 0.0),
+//                    child: Text(
+//                      '.',
+//                      style: TextStyle(
+//                          fontSize: 50.0,
+//                          fontWeight: FontWeight.bold,
+//                          color: Colors.green),
+//                    ),
+//                  )
                 ],
               ),
             ),

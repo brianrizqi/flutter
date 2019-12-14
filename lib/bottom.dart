@@ -37,6 +37,8 @@ class BottomPageState extends State<BottomPage> {
       home: Scaffold(
         body: fragment(_currentIndex),
         bottomNavigationBar: BottomNavigationBar(
+          fixedColor: Colors.green,
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (value) {
             _currentIndex = value;
@@ -44,7 +46,12 @@ class BottomPageState extends State<BottomPage> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: _currentIndex == 0
+                    ? Icon(
+                        Icons.home,
+                        color: Colors.green,
+                      )
+                    : Icon(Icons.home),
                 title: Text(
                   'Home',
                   style: TextStyle(
@@ -52,7 +59,12 @@ class BottomPageState extends State<BottomPage> {
                       fontWeight: FontWeight.bold),
                 )),
             BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
+                icon: _currentIndex == 1
+                    ? Icon(
+                        Icons.favorite,
+                        color: Colors.green,
+                      )
+                    : Icon(Icons.favorite),
                 title: Text(
                   'Plant',
                   style: TextStyle(
@@ -60,7 +72,12 @@ class BottomPageState extends State<BottomPage> {
                       fontWeight: FontWeight.bold),
                 )),
             BottomNavigationBarItem(
-                icon: Icon(Icons.person),
+                icon: _currentIndex == 2
+                    ? Icon(
+                        Icons.person,
+                        color: Colors.green,
+                      )
+                    : Icon(Icons.person),
                 title: Text(
                   'Profile',
                   style: TextStyle(

@@ -44,16 +44,16 @@ class SignupPageState extends State<SignupPage> {
                           fontSize: 50.0, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(120.0, 100.0, 0.0, 0.0),
-                    child: Text(
-                      '.',
-                      style: TextStyle(
-                          fontSize: 50.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green),
-                    ),
-                  )
+//                  Container(
+//                    padding: EdgeInsets.fromLTRB(120.0, 100.0, 0.0, 0.0),
+//                    child: Text(
+//                      '.',
+//                      style: TextStyle(
+//                          fontSize: 50.0,
+//                          fontWeight: FontWeight.bold,
+//                          color: Colors.green),
+//                    ),
+//                  )
                 ],
               ),
             ),
