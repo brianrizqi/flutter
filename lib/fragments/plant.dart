@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Nimchecker extends StatefulWidget {
-  NimcheckerState createState() => NimcheckerState();
+class Plant extends StatefulWidget {
+  PlantState createState() => PlantState();
 }
 
-class NimcheckerState extends State<Nimchecker> {
+class PlantState extends State<Plant> {
   @override
   Widget build(BuildContext context) {
     return Container(

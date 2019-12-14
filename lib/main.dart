@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/bottom.dart';
+import 'bottom.dart';
 import 'signup.dart';
 
 void main() => runApp(new MyApp());
@@ -51,7 +51,7 @@ class MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(155.0, 100.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(145.0, 100.0, 0.0, 0.0),
                     child: Text(
                       '.',
                       style: TextStyle(

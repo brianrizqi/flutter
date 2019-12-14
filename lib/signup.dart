@@ -45,7 +45,7 @@ class SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(130.0, 100.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(120.0, 100.0, 0.0, 0.0),
                     child: Text(
                       '.',
                       style: TextStyle(
@@ -88,20 +88,6 @@ class SignupPageState extends State<SignupPage> {
                     SizedBox(
                       height: 5.0,
                     ),
-                    Container(
-                      alignment: Alignment(1.0, 0.0),
-                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                      child: InkWell(
-                        child: Text(
-                          'Forgot Password',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Source-sans Pro",
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                    ),
                     SizedBox(
                       height: 40.0,
                     ),
@@ -116,7 +102,7 @@ class SignupPageState extends State<SignupPage> {
                           onTap: () {},
                           child: Center(
                             child: Text(
-                              'LOGIN',
+                              'REGISTER',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -131,27 +117,6 @@ class SignupPageState extends State<SignupPage> {
             SizedBox(
               height: 15.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Dont Have an account?',
-                    style: TextStyle(fontFamily: "Source-sans Pro")),
-                SizedBox(
-                  width: 5.0,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                        fontFamily: "Source-sans Pro",
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline),
-                  ),
-                )
-              ],
-            )
           ],
         ));
   }
