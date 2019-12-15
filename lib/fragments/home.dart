@@ -1,12 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_app/services/api.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   HomeState createState() => HomeState();
 }
 
 class HomeState extends State<Home> {
+  List dataJSON;
+  var api = Api.api + "article";
+
+  Future<String> getArticle() async {
+    http.Response result = await http
+        .get(Uri.encodeFull(api), headers: {"Accept": "application/json"});
+
+    this.setState(() {
+      var data = json.decode(result.body);
+      dataJSON = data['data'];
+//      print("jsonresponse : $data");
+      return data['message'];
+    });
+  }
+
+  @override
+  void initState() {
+    this.getArticle();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     const morning = Color(0xFFc0eae6);
@@ -16,24 +41,27 @@ class HomeState extends State<Home> {
     var formattedDate = int.parse(DateFormat('kk').format(now));
     if (formattedDate >= 0 && formattedDate < 12) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: morning,
+        statusBarColor: morning,
+//        systemNavigationBarColor: morning,
         statusBarIconBrightness: Brightness.dark, // status bar icons' color
         systemNavigationBarIconBrightness:
-        Brightness.dark, //navigation bar icons' color
+            Brightness.dark, //navigation bar icons' color
       ));
     } else if (formattedDate >= 12 && formattedDate < 18) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: afternoon,
         systemNavigationBarColor: afternoon, // status bar color
         statusBarIconBrightness: Brightness.dark, // status bar icons' color
         systemNavigationBarIconBrightness:
-        Brightness.dark, //navigation bar icons' color
+            Brightness.dark, //navigation bar icons' color
       ));
     } else if (formattedDate >= 18 && formattedDate < 24) {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: night, // status bar color
+        statusBarColor: night,
+//        systemNavigationBarColor: night, // status bar color
         statusBarIconBrightness: Brightness.dark, // status bar icons' color
         systemNavigationBarIconBrightness:
-        Brightness.dark, //navigation bar icons' color
+            Brightness.dark, //navigation bar icons' color
       ));
     }
     return new Scaffold(
@@ -73,15 +101,22 @@ class HomeState extends State<Home> {
             Column(
               children: <Widget>[
                 SizedBox(
-                  child: new ListView(
+                  child: new ListView.builder(
                     padding: EdgeInsets.only(bottom: 20),
+                    itemCount: dataJSON == null ? 0 : dataJSON.length,
                     shrinkWrap: true,
-                    children: <Widget>[
-                      new Artikel(
-                        "https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095529-stock-illustration-profile-icon-male-avatar.jpg",
-                        "asd",
-                      ),
-                    ],
+                    itemBuilder: (context, i) {
+                      return new Artikel(
+                          "http://brian.onestep.id/storage/" +
+                              dataJSON[i]['img'],
+                          dataJSON[i]['title']);
+                    },
+//                    children: <Widget>[
+//                      new Artikel(
+//                        "https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095529-stock-illustration-profile-icon-male-avatar.jpg",
+//                        api,
+//                      ),
+//                    ],
                   ),
                 )
               ],
@@ -140,7 +175,7 @@ class TextGreeting extends StatelessWidget {
   Widget build(BuildContext context) {
     if (formattedDate >= 0 && formattedDate < 12) {
       return Container(
-        padding: EdgeInsets.only(top: 30.0),
+        padding: EdgeInsets.only(top: 35.0),
         color: morning,
         width: double.maxFinite,
         alignment: Alignment.center,
@@ -155,7 +190,7 @@ class TextGreeting extends StatelessWidget {
       );
     } else if (formattedDate >= 12 && formattedDate < 18) {
       return Container(
-        padding: EdgeInsets.only(top: 30.0),
+        padding: EdgeInsets.only(top: 35.0),
         color: afternoon,
         width: double.maxFinite,
         alignment: Alignment.center,
@@ -170,7 +205,7 @@ class TextGreeting extends StatelessWidget {
       );
     } else if (formattedDate >= 18 && formattedDate < 24) {
       return Container(
-        padding: EdgeInsets.only(top: 30.0),
+        padding: EdgeInsets.only(top: 35.0),
         color: night,
         width: double.maxFinite,
         alignment: Alignment.center,
@@ -196,41 +231,46 @@ class Artikel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      padding: EdgeInsets.all(10),
-      child: new Center(
-        child: new Column(
-          children: <Widget>[
-            new Card(
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image(
-                          image: NetworkImage(gambar),
-                          width: 80,
-                          height: 80,
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: new Column(
+        children: <Widget>[
+          new Card(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Image(
+                        image: NetworkImage(gambar),
+                        width: 80,
+                        height: 80,
+                      ),
+                      Flexible(
+                        child: new RichText(
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          textAlign: TextAlign.left,
+                          text: TextSpan(
+                              text: judul,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.black)),
                         ),
-                        Text(
-                          judul,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              elevation: 1,
-            )
-          ],
-        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            elevation: 1,
+          )
+        ],
       ),
     );
   }
