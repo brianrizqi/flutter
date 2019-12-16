@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'bottom.dart';
 import 'signup.dart';
+import 'package:flutter_app/services/api.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() => runApp(new MyApp());
 
@@ -32,6 +35,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  TextEditingController username = new TextEditingController();
+  TextEditingController password = new TextEditingController();
+
+  @override
+  void initState() {
+//    login();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -59,16 +70,6 @@ class MyHomePageState extends State<MyHomePage> {
                           fontSize: 50.0, fontWeight: FontWeight.bold),
                     ),
                   ),
-//                  Container(
-//                    padding: EdgeInsets.fromLTRB(145.0, 100.0, 0.0, 0.0),
-//                    child: Text(
-//                      '.',
-//                      style: TextStyle(
-//                          fontSize: 50.0,
-//                          fontWeight: FontWeight.bold,
-//                          color: Colors.green),
-//                    ),
-//                  )
                 ],
               ),
             ),
@@ -77,6 +78,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     TextField(
+                      controller: username,
                       decoration: InputDecoration(
                           labelText: 'EMAIL / USERNAME',
                           labelStyle: TextStyle(
@@ -90,6 +92,7 @@ class MyHomePageState extends State<MyHomePage> {
                       height: 20.0,
                     ),
                     TextField(
+                      controller: password,
                       decoration: InputDecoration(
                           labelText: 'PASSWORD',
                           labelStyle: TextStyle(
@@ -129,7 +132,8 @@ class MyHomePageState extends State<MyHomePage> {
                         elevation: 5.0,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/bottom');
+//                            Navigator.of(context).pushNamed('/bottom');
+                            login(username, password, context);
                           },
                           child: Center(
                             child: Text(
@@ -174,4 +178,20 @@ class MyHomePageState extends State<MyHomePage> {
           ],
         ));
   }
+}
+
+void login(username, password, context) {
+  var api = Api.api + 'login';
+  http.post(api, headers: {
+    'Accept': 'application:json',
+    "Content-Type": "application/x-www-form-urlencoded"
+  }, body: {
+    'username': username.text,
+    'password': password.text
+  }).then((response) {
+    var data = json.decode(response.body);
+    if (data['error'] == false) {
+      Navigator.of(context).pushNamed('/bottom');
+    } else {}
+  });
 }
